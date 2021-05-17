@@ -1,8 +1,4 @@
-# DesignPatterns
-
------------------------------------------
-Single Responsibility Principle
------------------------------------------
+# Single Responsibility Principle
 
 -Class/function should only have a single responsibility
 
