@@ -7,4 +7,4 @@ Types of Dependency Injection :
 1) Constructor based dependency injection
 2) Setter based dependency injection
 
-Pattern type : Builder Pattern
+Pattern type : Abstract Factory Pattern
