@@ -1,0 +1,22 @@
+package visitor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Document {
+
+	private List<DocumentPart> documentParts;
+
+	public Document() {
+		documentParts = new ArrayList<>();
+	}
+
+	public void convert(IDocumentConverter converter) {
+		documentParts.stream().forEach(docPart -> docPart.convert(converter));
+	}
+
+	public void setDocumentParts(List<DocumentPart> documentParts) {
+		this.documentParts = documentParts;
+	}
+
+}
