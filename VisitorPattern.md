@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Document {
-
 	private List<DocumentPart> documentParts;
 
 	public Document() {
@@ -18,7 +17,6 @@ public class Document {
 	public void setDocumentParts(List<DocumentPart> documentParts) {
 		this.documentParts = documentParts;
 	}
-
 }
 
 public class DocumentPart {
