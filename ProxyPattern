@@ -1,0 +1,57 @@
+public class ProxyProgram {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		IGateway gateway = new InternetGatwayProxy();
+        gateway.acceptRequest("google.com");
+        gateway.acceptRequest("youtube.com");
+
+	}
+
+}
+
+public interface IGateway {
+	void acceptRequest(String url);
+}
+
+public class InternetGateway implements IGateway{
+
+    private List<String> blackListedUrls = new ArrayList<String>();
+
+    public InternetGateway() {
+        initiliazeBlackListedUrls();
+    }
+
+    private void initiliazeBlackListedUrls() {
+        blackListedUrls.add("google.com");
+        blackListedUrls.add("facebook.com");
+        blackListedUrls.add("microsoft.com");
+        blackListedUrls.add("paytm.com");
+        blackListedUrls.add("instagram.com");
+    }
+
+    public void acceptRequest(String url)
+    {
+        if (blackListedUrls.contains(url)) {
+            System.out.println("Cannot hit this url : " + url);
+            return;
+        }
+        System.out.println("Connected : " + url);
+    }
+
+}
+
+public class InternetGatwayProxy implements IGateway{
+
+	  private IGateway gateway;
+      public InternetGatwayProxy()
+      {
+          gateway = new InternetGateway();
+      }
+
+      public void acceptRequest(String url) {
+          gateway.acceptRequest(url);
+      }
+
+}
