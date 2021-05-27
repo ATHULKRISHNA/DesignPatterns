@@ -1,0 +1,89 @@
+public class EventAggregator implements IEventAggregator{
+
+	Map<String, List<ISubscribe>> router = new HashMap<String, List<ISubscribe>>();
+
+	@Override
+	public void publish(String eventName) {
+
+		if (router.containsKey(eventName)) {
+            List<ISubscribe> subscribers = router.get(eventName);
+            for(ISubscribe subscriber :  subscribers) {
+                subscriber.update(eventName);
+            }
+        }
+
+	}
+
+	@Override
+	public void subscribe(String eventName, ISubscribe subscriber) {
+		if (router.containsKey(eventName)) {
+			router.get(eventName).add(subscriber);
+        }
+        else {
+        	List<ISubscribe> subscribers = new ArrayList<>();
+        	subscribers.add(subscriber);
+        	router.put(eventName, subscribers);
+        }
+	}
+
+}
+
+public interface IEventAggregator {
+
+	void publish(String eventName);
+    void subscribe(String eventName, ISubscribe subscriber);
+
+}
+
+
+public interface ISubscribe {
+
+	void update(String eventName);
+
+}
+
+
+public class ModuleA {
+
+	IEventAggregator eventMediator;
+    public ModuleA(IEventAggregator eventMediator)  {
+        this.eventMediator = eventMediator;
+    }
+
+    public void publishEvent() {
+        this.eventMediator.publish("Event1");
+    }
+
+}
+
+
+public class ModuleB implements ISubscribe{
+
+	private IEventAggregator eventMediator;
+
+	public ModuleB(IEventAggregator eventMediator) {
+    	this.eventMediator = eventMediator;
+    	eventMediator.subscribe("Event1", this);
+    }
+
+    public void update(String eventName)
+    {
+        if(eventName.equals("Event1")) {
+            System.out.println("ModuleB has subscribed for event - Event1");
+        }
+    }
+
+}
+
+
+public class Program {
+
+	public static void main(String[] args) {
+
+		IEventAggregator eventAgg = new EventAggregator();
+        ModuleA moduleA = new ModuleA(eventAgg);
+        ModuleB moduleB = new ModuleB(eventAgg);
+        moduleA.publishEvent();
+	}
+
+}
