@@ -1,0 +1,110 @@
+public class RemoteAccessPoint implements AccessPoint{
+
+	private Appliance currentAppliance;
+
+	public RemoteAccessPoint(Appliance appliance) {
+		setCurrentAppliance(appliance);
+	}
+
+	@Override
+	public void on(Appliance currentAppliance) {
+		currentAppliance.switchOn();
+	}
+
+	@Override
+	public void off(Appliance currentAppliance) {
+		currentAppliance.switchOff();
+	}
+
+	public Appliance getCurrentAppliance() {
+		return currentAppliance;
+	}
+
+	public void setCurrentAppliance(Appliance currentAppliance) {
+		this.currentAppliance = currentAppliance;
+	}
+
+}
+
+public class PushButtonAccessPoint implements AccessPoint{
+
+	private Appliance currentAppliance;
+
+	public PushButtonAccessPoint(Appliance appliance) {
+		currentAppliance = appliance;
+	}
+
+	@Override
+	public void on(Appliance currentAppliance) {
+		currentAppliance.switchOn();
+	}
+
+	@Override
+	public void off(Appliance currentAppliance) {
+		currentAppliance.switchOff();
+	}
+
+}
+
+
+public class AutomationAccessPoint implements AccessPoint{
+
+	private Appliance currentAppliance;
+
+	public AutomationAccessPoint(Appliance appliance) {
+		setCurrentAppliance(appliance);
+	}
+
+	@Override
+	public void on(Appliance currentAppliance) {
+		currentAppliance.switchOn();
+	}
+
+	@Override
+	public void off(Appliance currentAppliance) {
+		currentAppliance.switchOff();
+	}
+
+	public Appliance getCurrentAppliance() {
+		return currentAppliance;
+	}
+
+	public void setCurrentAppliance(Appliance currentAppliance) {
+		this.currentAppliance = currentAppliance;
+	}
+
+}
+
+
+public abstract class Appliance {
+
+	abstract void switchOn();
+
+	abstract void switchOff();
+
+}
+
+
+public interface AccessPoint {
+
+	public void on(Appliance currentAppliance);
+
+	public void off(Appliance currentAppliance);
+}
+
+
+public class Tv extends Appliance{
+
+	@Override
+	void switchOn() {
+		// TODO Auto-generated method stub
+		System.out.print("Switch ON");
+	}
+
+	@Override
+	void switchOff() {
+		// TODO Auto-generated method stub
+		System.out.print("Switch OFF");
+	}
+
+}
