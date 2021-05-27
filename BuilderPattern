@@ -1,0 +1,97 @@
+public class Program {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Contractor contractor = new Contractor();
+        IHouse iglooHouse = contractor.constructHouse(new IglooHouseBuilder());
+	}
+
+}
+
+public class ConcreteHouse implements IHouse{
+
+	@Override
+	public IHouse setBasement() {
+		System.out.println("Concrete Basement");
+		return this;
+	}
+
+	@Override
+	public IHouse setStructure() {
+		System.out.println("Concrete Structure");
+		return this;
+	}
+
+	@Override
+	public IHouse setWalls() {
+		System.out.println("Concrete Walls");
+		return this;
+	}
+
+	@Override
+	public IHouse setInteriors() {
+		System.out.println("Concrete Interiors");
+		return this;
+	}
+
+}
+
+public class Contractor {
+
+	public IHouse constructHouse(IHouseBuilder builder)
+	{
+	    builder.buildHouse();
+	    return builder.getHouse();
+	}
+
+}
+
+public class IglooHouseBuilder implements IHouseBuilder{
+
+	private IHouse house;
+
+	@Override
+	public void buildHouse() {
+		house = new ConcreteHouse();
+		house.setBasement().setWalls().setInteriors().setStructure();
+	}
+
+	@Override
+	public IHouse getHouse() {
+		return house;
+	}
+
+}
+
+public interface IHouse {
+
+	IHouse setBasement();
+    IHouse setStructure();
+    IHouse setWalls();
+    IHouse setInteriors();
+
+}
+
+public interface IHouseBuilder {
+
+    void buildHouse();
+    IHouse getHouse();
+
+}
+
+public class RCHouseBuilder implements IHouseBuilder{
+
+	private IHouse house;
+
+	@Override
+	public void buildHouse() {
+		house = new ConcreteHouse();
+		house.setBasement().setWalls().setInteriors().setStructure();
+	}
+
+	@Override
+	public IHouse getHouse() {
+		return house;
+	}
+
+}
