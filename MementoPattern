@@ -1,0 +1,118 @@
+public class MemetoProgram {
+
+	public static void main(String[] args) {
+		CareTaker careTaker = new CareTaker();
+        TextBox textBox = new TextBox();
+        textBox.onTextchange("A");
+        careTaker.add(textBox.saveStateToMemento());
+        textBox.onTextchange("B");
+        careTaker.add(textBox.saveStateToMemento());
+        textBox.onTextchange("C");
+        careTaker.add(textBox.saveStateToMemento());
+        careTaker.print();
+        careTaker.undo();
+        careTaker.print();
+        textBox.onTextchange("D");
+        careTaker.add(textBox.saveStateToMemento());
+        textBox.onTextchange("E");
+        careTaker.add(textBox.saveStateToMemento());
+        textBox.onTextchange("F");
+        careTaker.add(textBox.saveStateToMemento());
+        careTaker.print();
+        careTaker.undo();
+        careTaker.undo();
+        careTaker.print();
+        textBox.onTextchange("G");
+        careTaker.add(textBox.saveStateToMemento());
+        textBox.onTextchange("H");
+        careTaker.add(textBox.saveStateToMemento());
+        careTaker.print();
+        careTaker.undo();
+        careTaker.undo();
+        careTaker.print();
+	}
+
+}
+
+public class CareTaker {
+
+	List<Memento> current = new ArrayList<Memento>();
+    List<Memento> backup = new ArrayList<Memento>();
+
+    public void add(Memento state) {
+        current.add(state);
+    }
+
+    public Memento get(int index) {
+        return current.get(index);
+    }
+
+    public void undo() {
+        if (current.size() == 0)
+            return;
+
+        int lastElementIndex = current.size() - 1;
+        Memento memento = current.get(lastElementIndex);
+        current.remove(lastElementIndex);
+        backup.add(memento);
+    }
+
+    public void redo() {
+        if (backup.size() == 0)
+            return;
+
+        int lastElementIndex = backup.size() - 1;
+        Memento memento = backup.get(lastElementIndex);
+        backup.remove(lastElementIndex);
+        current.add(memento);
+    }
+
+    public void print() {
+        System.out.println("Current state : ");
+
+        for(int i = 0; i < current.size() ; i++) {
+        	System.out.print(current.get(i).getState() + "  ");
+        }
+
+        System.out.println();
+
+    }
+
+}
+
+
+public class TextBox {
+
+	private String state;
+
+    public void onTextchange(String content) {
+        state = content;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public Memento saveStateToMemento() {
+        return new Memento(state);
+    }
+
+    public void getStateFromMemento(Memento memento) {
+        state = memento.getState();
+    }
+
+}
+
+public class Memento {
+
+	private String state;
+
+    public Memento(String state) {
+        this.state = state;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+}
