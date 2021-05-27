@@ -1,0 +1,95 @@
+public class Program {
+
+    public static void main(String[] args)
+    {
+        Subject subject = new Subject();
+        IObserver observerA = new ObserverOne();
+        IObserver observerB = new ObserverTwo();
+        IObserver observerC = new ObserverThree();
+
+        subject.subscribe(observerA);
+        subject.subscribe(observerB);
+        subject.subscribe(observerC);
+
+        subject.setState(10);
+
+        subject.unScubscribe(observerA);
+        subject.unScubscribe(observerB);
+        subject.unScubscribe(observerC);
+        subject.setState(10);
+    }
+
+}
+
+public class Subject {
+
+	private List<IObserver> observers;
+	private int state;
+
+	public Subject() {
+		setObservers(new ArrayList<IObserver>());
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+		notifyAllObservers();
+	}
+
+	public List<IObserver> getObservers() {
+		return observers;
+	}
+
+	public void setObservers(List<IObserver> observers) {
+		this.observers = observers;
+	}
+
+	private void notifyAllObservers() {
+		for (IObserver observer : observers) {
+			observer.update();
+		}
+	}
+
+	public void subscribe(IObserver observer) {
+		observers.add(observer);
+	}
+
+	public void unScubscribe(IObserver observer) {
+		observers.remove(observer);
+	}
+}
+
+public interface IObserver {
+
+	void update();
+
+}
+
+public class ObserverOne implements IObserver{
+
+	@Override
+	public void update() {
+		System.out.println("Updating ObserverOne");
+	}
+
+}
+public class ObserverTwo implements IObserver{
+
+	@Override
+	public void update() {
+		System.out.println("Updating ObserverTwo");
+	}
+
+}
+
+public class ObserverThree implements IObserver{
+
+	@Override
+	public void update() {
+		System.out.println("Updating ObserverThree");
+	}
+
+}
